@@ -6,25 +6,36 @@ from prometheus_client import (
     CONTENT_TYPE_LATEST,
     REGISTRY,
     CollectorRegistry,
-    generate_latest, Counter,
+    generate_latest,
+    Gauge,
 )
 from prometheus_client.multiprocess import MultiProcessCollector
 from starlette.requests import Request
 from starlette.responses import Response
 
-open_page_total = Counter(
-    name="open_page_total",
-    labelnames=["name"],
+router = APIRouter()
+
+metric = Gauge(
+    name="metric",
+    labelnames=["label"],
     documentation="",
     namespace="my_app",
 )
 
 
-async def index_view():
-    open_page_total.labels(name="index").inc(1)
-    return "index page"
+@router.get("/init")
+async def init_metric_view(label: str = 'default'):
+    metric.labels(label=label)
+    return f"metric with label={label} initialized"
 
 
+@router.get("/inc")
+async def inc_metric_view(label: str = 'default'):
+    metric.labels(label=label).inc(1)
+    return f"metric with label={label} increased"
+
+
+@router.get("/metrics")
 async def metrics_view(request: Request):
     if "prometheus_multiproc_dir" in os.environ:
         registry = CollectorRegistry()
@@ -36,12 +47,9 @@ async def metrics_view(request: Request):
 
 
 def create_app():
-    app = FastAPI()
-    router = APIRouter()
-    router.add_api_route("/metrics", metrics_view, methods=["GET"])
-    router.add_api_route("/", index_view, methods=["GET"])
-    app.include_router(router)
-    return app
+    _app = FastAPI()
+    _app.include_router(router)
+    return _app
 
 
 app = create_app()

@@ -1,39 +1,32 @@
 prometheus-playground
 =====================
 
-This project shows how metrics are exported from a python application to prometheus.
+It is set up that allow you run and try work with metrics. You can manage 
+metrics and observe the results. As a backend here you can use `prometheus` and 
+`victoria metrics`, this allows you to compare their work on the same data set.
 
-The command to run all services: `docker-compose up`
+## Usage
 
-### application
+You can run the project using one of the following commands:
 
-- The command to get the index page. During page opening, the my_app_open_page_total 
-metric is incremented.
+- `make run`
+- `make legacy-run`
 
-    ```curl localhost:8000/```
+After running the project, you will have fully set up grafana with datasource and dashboard.
 
-- Command to retrieve metrics from an application:
+URLs:
 
-    ```curl localhost:8000/metrics```
+- new grafana http://localhost:3000/ (login/password admin/admin)
+- legacy grafana http://localhost:3001/ (login/password admin/admin)
+- prometheus http://localhost:9090/
+- victoria metrics http://localhost:8428/
 
-### grafana
-
-- UI http://127.0.0.1:3000/ (login/password admin/admin)
-
-Manual how to enable old alerts https://grafana.com/docs/grafana/latest/alerting/migrating-alerts/roll-back/.
-
-
-### prometheus
-
-- UI prometheus: http://localhost:9090
-
-- The command to reload prometheus config:
-
-    ```curl -X POST localhost:9090/-/reload```
-
+> The `request` folder contains http requests that you can perform to interact with the project.
 
 References:
 
 - https://grafana.com/blog/2019/12/04/how-to-explore-prometheus-with-easy-hello-world-projects/ - basic guide
 - https://prometheus.io/docs/prometheus/latest/getting_started/ - a good, short description of how to write a prometheus config file
 - https://grafana.com/docs/grafana/latest/setup-grafana/configure-docker/
+- https://grafana.com/docs/grafana/latest/alerting/migrating-alerts/roll-back/ - manual how to enable old alerts
+- https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources - how configure data sources and dashboards automatically
