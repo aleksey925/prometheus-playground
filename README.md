@@ -7,6 +7,8 @@ metrics and observe the results. As a backend here you can use `prometheus` and
 
 ## Usage
 
+> In first time run you need to run `make download-victoriametrics-plugin`
+
 You can run the project using one of the following commands:
 
 - `make run`
@@ -16,8 +18,8 @@ After running the project, you will have fully set up grafana with datasource an
 
 URLs:
 
-- new grafana http://localhost:3000/ (login/password admin/admin)
-- legacy grafana http://localhost:3001/ (login/password admin/admin)
+- new grafana http://localhost:3000/dashboards/ (login/password admin/admin)
+- legacy grafana http://localhost:3001/dashboards/ (login/password admin/admin)
 - prometheus http://localhost:9090/
 - victoria metrics http://localhost:8428/
 
@@ -30,3 +32,4 @@ References:
 - https://grafana.com/docs/grafana/latest/setup-grafana/configure-docker/
 - https://grafana.com/docs/grafana/latest/alerting/migrating-alerts/roll-back/ - manual how to enable old alerts
 - https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources - how configure data sources and dashboards automatically
+- https://github.com/VictoriaMetrics/grafana-datasource?tab=readme-ov-file#install-via-docker - how to install victoria metrics plugin to grafana

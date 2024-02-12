@@ -26,30 +26,33 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./config/grafana.ini:/etc/grafana/grafana.ini"
+      - "./config/grafana/new/grafana.ini:/etc/grafana/grafana.ini"
       # init data sources
-      - "./config/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/grafana-datasource.yaml"
+      - "./config/grafana/new/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/grafana-datasource.yaml"
       # init dashboards loader
-      - "./config/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard.yaml"
+      - "./config/grafana/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard.yaml"
       # dashboards
-      - "./config/dashboards:/var/lib/grafana/dashboards"
+      - "./config/grafana/dashboards:/var/lib/grafana/dashboards"
+      - "./config/grafana/plugins:/var/lib/grafana/plugins"
     links:
       - prometheus
+      - victoria-metrics
 
   grafana-legacy:
     image: grafana/grafana-oss:8.4.4
     ports:
       - "3001:3000"
     volumes:
-      - "./config/grafana-legacy.ini:/etc/grafana/grafana.ini"
+      - "./config/grafana/legacy/grafana.ini:/etc/grafana/grafana.ini"
       # init data sources
-      - "./config/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/grafana-datasource.yaml"
+      - "./config/grafana/legacy/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/grafana-datasource.yaml"
       # init dashboards loader
-      - "./config/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard.yaml"
+      - "./config/grafana/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/grafana-dashboard.yaml"
       # dashboards
-      - "./config/dashboards:/var/lib/grafana/dashboards"
+      - "./config/grafana/dashboards:/var/lib/grafana/dashboards"
     links:
       - prometheus
+      - victoria-metrics
 
   app:
     build: .

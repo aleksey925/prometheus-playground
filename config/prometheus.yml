@@ -26,5 +26,6 @@ scrape_configs:
       # scheme defaults to 'http'.
       - targets: ["app:8000"]
 
+# Specifies to send copies of metrics to victoria-metrics
 remote_write:
   - url: http://victoria-metrics:8428/api/v1/write
