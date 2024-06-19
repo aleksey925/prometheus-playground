@@ -35,6 +35,12 @@ async def inc_metric_view(label: str = 'default'):
     return f"metric with label={label} increased"
 
 
+@router.get("/set")
+async def set_metric_view(value: int, label: str = 'default'):
+    metric.labels(label=label).set(value)
+    return f"metric with label={label} increased"
+
+
 @router.get("/metrics")
 async def metrics_view(request: Request):
     if "prometheus_multiproc_dir" in os.environ:

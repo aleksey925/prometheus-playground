@@ -1,2 +1,0 @@
-# reload the prometheus configuration on the fly
-POST localhost:9090/-/reload
